@@ -1,0 +1,13 @@
+{
+  "name": "visual-recon",
+  "version": "1.0.0",
+  "description": "Fingerprint visual de superficie de ataque: screenshot + deteccao de tecnologia por host, com relatorio HTML navegavel",
+  "main": "visual_recon.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node visual_recon.js"
+  },
+  "dependencies": {
+    "puppeteer-core": "^25.12.0"
+  }
+}
