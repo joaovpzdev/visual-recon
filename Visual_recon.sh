@@ -116,7 +116,7 @@ log_info "Entrada: $INPUT"
 log_info "Concorrencia: $CONCURRENCY | Timeout: ${TIMEOUT}ms"
 echo ""
 
-node "$SCRIPT_DIR/visual_recon.js" \
+node "$SCRIPT_DIR/Visual_recon.js" \
     --input "$INPUT" \
     --output "$HTML_FILE" \
     --chromium-path "$CHROMIUM_PATH" \
@@ -126,7 +126,7 @@ node "$SCRIPT_DIR/visual_recon.js" \
 STATUS=$?
 
 if [[ $STATUS -ne 0 ]]; then
-    log_err "O visual_recon.js terminou com erro (codigo $STATUS)."
+    log_err "O Visual_recon.js terminou com erro (codigo $STATUS)."
     exit "$STATUS"
 fi
 

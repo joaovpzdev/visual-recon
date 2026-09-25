@@ -5,20 +5,19 @@
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![Kali](https://img.shields.io/badge/Kali-%23268BEE.svg?style=for-the-badge&logo=kalilinux&logoColor=white)
 
-
 Para cada host/subdomínio de uma lista (a sua própria, ou a saída do `httpx` do kit [Full Recon Pipeline](../full-recon-pipeline)), abre a página num Chromium headless, captura **screenshot**, **título**, **status HTTP** e **tecnologia detectada** (servidor, CMS, framework front-end, ferramentas administrativas expostas), e monta uma **galeria HTML** navegável — no estilo Aquatone/gowitness.
 
-É o complemento visual dos outros kits: eles te dizem *quais* hosts existem, este te mostra *como cada um se parece* e *com o que ele foi construído*, batendo o olho.
+É o complemento visual dos outros kits: eles te dizem _quais_ hosts existem, este te mostra _como cada um se parece_ e _com o que ele foi construído_, batendo o olho.
 
 ## O que tem aqui
 
-| Arquivo | Função |
-|---|---|
-| `Visual_recon.sh` | Wrapper: valida dependências, localiza o Chromium, chama o worker |
-| `visual_recon.js` | Worker Node: navega, tira screenshot, detecta tecnologia, monta a lista |
-| `Tech_detect.js` | Motor de detecção de tecnologia por assinaturas (headers + HTML) |
-| `Report.js` | Gera o relatório HTML (galeria com busca, filtro por tecnologia, lightbox) |
-| `README.md` | Este arquivo |
+| Arquivo           | Função                                                                     |
+| ----------------- | -------------------------------------------------------------------------- |
+| `Visual_recon.sh` | Wrapper: valida dependências, localiza o Chromium, chama o worker          |
+| `Visual_recon.js` | Worker Node: navega, tira screenshot, detecta tecnologia, monta a lista    |
+| `Tech_detect.js`  | Motor de detecção de tecnologia por assinaturas (headers + HTML)           |
+| `Report.js`       | Gera o relatório HTML (galeria com busca, filtro por tecnologia, lightbox) |
+| `README.md`       | Este arquivo                                                               |
 
 ---
 
@@ -41,7 +40,7 @@ mkdir -p ~/osint-toolkit/visual-recon
 # copie todos os arquivos deste kit para essa pasta
 cd ~/osint-toolkit/visual-recon
 npm install
-chmod +x visual_recon.sh
+chmod +x Visual_recon.sh
 ```
 
 ---
@@ -49,39 +48,41 @@ chmod +x visual_recon.sh
 ## Uso
 
 ### Sintaxe
+
 ```bash
-./visual_recon.sh -i ARQUIVO [opcoes]
+./Visual_recon.sh -i ARQUIVO [opcoes]
 ```
 
 ### Opções
 
-| Flag | Descrição | Padrão |
-|---|---|---|
-| `-i ARQUIVO` | Lista de hosts — texto simples (um por linha) **ou** JSONL do httpx (**obrigatório**) | — |
-| `-t ALVO` | Nome do alvo, só para o título do relatório | — |
-| `-o DIRETORIO` | Diretório de saída | `./relatorios` |
-| `-c N` | Concorrência (quantas páginas em paralelo) | `5` |
-| `-T MS` | Timeout por host em milissegundos | `15000` |
-| `-p CAMINHO` | Caminho do binário do Chromium | autodetecta |
-| `-a` | Abre o relatório automaticamente | desativado |
-| `-h` | Ajuda | — |
+| Flag           | Descrição                                                                             | Padrão         |
+| -------------- | ------------------------------------------------------------------------------------- | -------------- |
+| `-i ARQUIVO`   | Lista de hosts — texto simples (um por linha) **ou** JSONL do httpx (**obrigatório**) | —              |
+| `-t ALVO`      | Nome do alvo, só para o título do relatório                                           | —              |
+| `-o DIRETORIO` | Diretório de saída                                                                    | `./relatorios` |
+| `-c N`         | Concorrência (quantas páginas em paralelo)                                            | `5`            |
+| `-T MS`        | Timeout por host em milissegundos                                                     | `15000`        |
+| `-p CAMINHO`   | Caminho do binário do Chromium                                                        | autodetecta    |
+| `-a`           | Abre o relatório automaticamente                                                      | desativado     |
+| `-h`           | Ajuda                                                                                 | —              |
 
 ### Exemplos
 
 ```bash
 # Lista de hosts simples
-./visual_recon.sh -i hosts.txt
+./Visual_recon.sh -i hosts.txt
 
 # Reaproveitando a saida do kit full_recon_pipeline.sh (httpx.jsonl)
-./visual_recon.sh -i ../full-recon-pipeline/relatorios/httpx.jsonl -t exemplo.com -a
+./Visual_recon.sh -i ../full-recon-pipeline/relatorios/httpx.jsonl -t exemplo.com -a
 
 # Mais concorrencia, timeout maior (alvos lentos)
-./visual_recon.sh -i hosts.txt -c 10 -T 25000
+./Visual_recon.sh -i hosts.txt -c 10 -T 25000
 ```
 
 ### Formato do arquivo de entrada
 
 Texto simples, um host por linha (com ou sem esquema — `https://` é assumido se ausente):
+
 ```
 www.exemplo.com
 api.exemplo.com
@@ -103,7 +104,7 @@ O motor de detecção (`Tech_detect.js`) é **assinaturas próprias**, sem depen
 - **Ferramentas administrativas expostas** (relevante para superfície de ataque): cPanel, phpMyAdmin, Jenkins, Grafana, Kibana, GitLab, Portainer, Swagger/OpenAPI
 - **Analytics**: Google Analytics, Google Tag Manager
 
-Para adicionar uma assinatura nova, edite o array `SIGNATURES` em `techDetect.js` — cada entrada é só um `{ name, test }` onde `test` recebe `{ headers, html, title, cookies }` e devolve `true`/`false`.
+Para adicionar uma assinatura nova, edite o array `SIGNATURES` em `Tech_detect.js` — cada entrada é só um `{ name, test }` onde `test` recebe `{ headers, html, title, cookies }` e devolve `true`/`false`.
 
 ---
 
