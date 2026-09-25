@@ -1,5 +1,11 @@
 # Visual Recon — Fingerprint Visual de Superfície de Ataque
 
+![NodeJS](https://img.shields.io/badge/node.js-%236DA55F.svg?style=for-the-badge&logo=node.js&logoColor=white)
+![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Kali](https://img.shields.io/badge/Kali-%23268BEE.svg?style=for-the-badge&logo=kalilinux&logoColor=white)
+
+
 Para cada host/subdomínio de uma lista (a sua própria, ou a saída do `httpx` do kit [Full Recon Pipeline](../full-recon-pipeline)), abre a página num Chromium headless, captura **screenshot**, **título**, **status HTTP** e **tecnologia detectada** (servidor, CMS, framework front-end, ferramentas administrativas expostas), e monta uma **galeria HTML** navegável — no estilo Aquatone/gowitness.
 
 É o complemento visual dos outros kits: eles te dizem *quais* hosts existem, este te mostra *como cada um se parece* e *com o que ele foi construído*, batendo o olho.
