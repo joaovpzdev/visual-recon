@@ -16,9 +16,13 @@
  */
 const fs = require("fs");
 const path = require("path");
-const puppeteer = require("puppeteer-core");
 const { detectTech } = require("./Tech_detect");
 const { buildReport } = require("./Report");
+
+async function loadPuppeteer() {
+  const mod = await import("puppeteer-core");
+  return mod.launch ? mod : mod.default;
+}
 
 function parseArgs(argv) {
   const args = { concurrency: 5, timeout: 15000, output: "relatorio.html" };
@@ -163,6 +167,7 @@ async function main() {
     `Alvo: ${hosts.length} hosts | concorrencia: ${args.concurrency} | chromium: ${chromiumPath}`,
   );
 
+  const puppeteer = await loadPuppeteer();
   const browser = await puppeteer.launch({
     executablePath: chromiumPath,
     headless: true,
